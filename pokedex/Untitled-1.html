@@ -3,7 +3,7 @@
 <head>
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>PokéWiki | Tu enciclopedia Pokémon</title>
+ <title>Pokedex Luis | Tu enciclopedia Pokémon</title>
  <script src="https://cdn.tailwindcss.com"></script>
  <script>
  tailwind.config = {
@@ -33,6 +33,11 @@
  .font-orbitron { font-family: 'Orbitron', monospace; }
  .font-inter { font-family: 'Inter', sans-serif; }
 
+ /* Transiciones globales para modo oscuro */
+ * {
+ transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+ }
+
  .pokemon-card {
  background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
@@ -44,6 +49,45 @@
  box-shadow: 0 20px 40px rgba(0,0,0,0.12);
  }
 
+ .pokemon-card.legendary {
+ background: linear-gradient(145deg, #fff7ed 0%, #fed7aa 100%);
+ border: 2px solid #f97316;
+ position: relative;
+ }
+
+ .pokemon-card.legendary::before {
+ content: '👑';
+ position: absolute;
+ top: 8px;
+ right: 8px;
+ font-size: 20px;
+ z-index: 10;
+ }
+
+ .pokemon-card.legendary:hover {
+ box-shadow: 0 20px 40px rgba(249, 115, 22, 0.3);
+ }
+
+ /* Modo Oscuro - Pokemon Cards */
+ .dark .pokemon-card {
+ background: linear-gradient(145deg, #374151 0%, #1f2937 100%);
+ box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+ border: 1px solid #4b5563;
+ }
+
+ .dark .pokemon-card:hover {
+ box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+ }
+
+ .dark .pokemon-card.legendary {
+ background: linear-gradient(145deg, #92400e 0%, #b45309 100%);
+ border: 2px solid #f59e0b;
+ }
+
+ .dark .pokemon-card.legendary:hover {
+ box-shadow: 0 20px 40px rgba(245, 158, 11, 0.3);
+ }
+
  .type-badge {
  transition: all 0.2s ease;
  }
@@ -52,8 +96,110 @@
  transform: scale(1.05);
  }
 
+ .legendary-badge {
+ background: linear-gradient(45deg, #f59e0b, #f97316);
+ color: white;
+ animation: shimmer 2s infinite;
+ }
+
+ @keyframes shimmer {
+ 0%, 100% { opacity: 1; }
+ 50% { opacity: 0.8; }
+ }
+
  .gradient-bg {
  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+ }
+
+ /* Modo Oscuro - Backgrounds */
+ .dark {
+ background-color: #111827 !important;
+ color: #f9fafb;
+ }
+
+ .dark .bg-white {
+ background-color: #1f2937 !important;
+ }
+
+ .dark .bg-gray-50 {
+ background-color: #111827 !important;
+ }
+
+ .dark .bg-gray-100 {
+ background-color: #374151 !important;
+ }
+
+ .dark .bg-gray-800 {
+ background-color: #000000 !important;
+ }
+
+ /* Modo Oscuro - Textos */
+ .dark .text-gray-700 {
+ color: #d1d5db !important;
+ }
+
+ .dark .text-gray-600 {
+ color: #9ca3af !important;
+ }
+
+ .dark .text-gray-800 {
+ color: #f3f4f6 !important;
+ }
+
+ .dark .text-gray-500 {
+ color: #6b7280 !important;
+ }
+
+ .dark .text-gray-400 {
+ color: #9ca3af !important;
+ }
+
+ /* Modo Oscuro - Bordes */
+ .dark .border-gray-200 {
+ border-color: #4b5563 !important;
+ }
+
+ .dark .border-gray-300 {
+ border-color: #6b7280 !important;
+ }
+
+ /* Modo Oscuro - Inputs y Selects */
+ .dark input,
+ .dark select {
+ background-color: #374151 !important;
+ border-color: #6b7280 !important;
+ color: #f9fafb !important;
+ }
+
+ .dark input:focus,
+ .dark select:focus {
+ border-color: #a855f7 !important;
+ box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1) !important;
+ }
+
+ .dark input::placeholder {
+ color: #9ca3af !important;
+ }
+
+ /* Modo Oscuro - Botones */
+ .dark button:not(.legendary-badge):not([style*="background"]) {
+ background-color: #374151 !important;
+ color: #f9fafb !important;
+ border-color: #6b7280 !important;
+ }
+
+ .dark button:hover:not(.legendary-badge):not([style*="background"]) {
+ background-color: #4b5563 !important;
+ }
+
+ /* Modo Oscuro - Estados especiales */
+ .dark .aspect-square {
+ background: linear-gradient(135deg, #374151 0%, #1f2937 100%) !important;
+ }
+
+ /* Modo Oscuro - Modal */
+ .dark .modal-content {
+ background-color: #1f2937 !important;
  }
 
  .loading-spinner {
@@ -63,6 +209,11 @@
  width: 40px;
  height: 40px;
  animation: spin 1s linear infinite;
+ }
+
+ .dark .loading-spinner {
+ border: 3px solid #374151;
+ border-top: 3px solid #a855f7;
  }
 
  @keyframes spin {
@@ -85,6 +236,11 @@
  animation: skeleton-loading 1.5s ease-in-out infinite;
  }
 
+ .dark .skeleton {
+ background: linear-gradient(90deg, #374151 25%, transparent 37%, #374151 63%);
+ background-size: 400% 100%;
+ }
+
  @keyframes skeleton-loading {
  0% { background-position: 100% 50%; }
  100% { background-position: 0% 50%; }
@@ -95,6 +251,20 @@
  background: linear-gradient(90deg, #ef4444, #f97316, #eab308, #22c55e);
  border-radius: 4px;
  transition: width 0.3s ease;
+ }
+
+ /* Icono de modo oscuro */
+ .dark-mode-icon {
+ transition: transform 0.3s ease;
+ }
+
+ .dark .dark-mode-icon {
+ transform: rotate(180deg);
+ }
+
+ /* Indicador de modo oscuro activo */
+ .dark .gradient-bg {
+ background: linear-gradient(135deg, #4c1d95 0%, #1e1b4b 100%);
  }
  </style>
 </head>
@@ -108,14 +278,15 @@
  <span class="text-2xl">⚡</span>
  </div>
  <div>
- <h1 class="text-white text-xl font-orbitron font-bold">PokéWiki</h1>
+ <h1 class="text-white text-xl font-orbitron font-bold">Pokedex Luis</h1>
  <p class="text-purple-100 text-xs">Tu enciclopedia Pokémon</p>
  </div>
  </div>
  <div class="flex items-center space-x-4">
- <button id="darkModeToggle" class="text-white hover:text-purple-200 transition-colors">
- <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
- <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+ <button id="darkModeToggle" class="text-white hover:text-purple-200 transition-colors p-2 rounded-lg hover:bg-white hover:bg-opacity-10">
+ <svg class="w-6 h-6 dark-mode-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path class="sun-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+ <path class="moon-icon hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
  </svg>
  </button>
  <div id="stats" class="text-white text-sm font-medium">
@@ -163,6 +334,16 @@
  </select>
  </div>
 
+ <!-- Filtro por Clase -->
+ <div class="mb-6">
+ <label class="block text-sm font-semibold text-gray-700 mb-2">Clase</label>
+ <select id="classFilter" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pokemon-500 focus:border-transparent outline-none">
+ <option value="">Todas las clases</option>
+ <option value="normal">Normal</option>
+ <option value="legendary">Legendario</option>
+ </select>
+ </div>
+
  <!-- Ordenamiento -->
  <div class="mb-6">
  <label class="block text-sm font-semibold text-gray-700 mb-2">Ordenar por</label>
@@ -182,6 +363,14 @@
  </div>
  </div>
 
+ <!-- Filtros por Clasificación -->
+ <div class="mb-6">
+ <label class="block text-sm font-semibold text-gray-700 mb-2">Filtrar por clasificación</label>
+ <div id="classFilters" class="grid grid-cols-1 gap-2">
+ <!-- Los botones de clasificación se generarán dinámicamente -->
+ </div>
+ </div>
+
  <!-- Estadísticas -->
  <div class="mb-6">
  <h3 class="text-sm font-semibold text-gray-700 mb-2">Estadísticas</h3>
@@ -193,6 +382,10 @@
  <div class="flex justify-between">
  <span>Total:</span>
  <span id="totalCount" class="font-medium">0</span>
+ </div>
+ <div class="flex justify-between">
+ <span>Legendarios:</span>
+ <span id="legendaryCount" class="font-medium text-orange-600">0</span>
  </div>
  </div>
  </div>
@@ -248,7 +441,7 @@
 
  <!-- Modal de Detalles -->
  <div id="pokemonModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
- <div class="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+ <div class="bg-white dark:bg-gray-800 rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto modal-content">
  <div id="modalContent">
  <!-- El contenido del modal se generará dinámicamente -->
  </div>
@@ -260,14 +453,15 @@
  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
  <div>
- <h3 class="text-lg font-semibold mb-4">PokéWiki</h3>
- <p class="text-gray-300">Tu enciclopedia Pokémon definitiva con información completa de todas las generaciones.</p>
+ <h3 class="text-lg font-semibold mb-4">Pokedex Luis</h3>
+ <p class="text-gray-300">Tu enciclopedia Pokémon definitiva con información completa de todas las generaciones y clasificación de legendarios.</p>
  </div>
  <div>
  <h3 class="text-lg font-semibold mb-4">Características</h3>
  <ul class="space-y-2 text-gray-300">
  <li>• Búsqueda avanzada</li>
- <li>• Filtros por tipo y generación</li>
+ <li>• Filtros por tipo, generación y clase</li>
+ <li>• Clasificación de Pokémon legendarios</li>
  <li>• Información detallada</li>
  <li>• Diseño responsive</li>
  </ul>
@@ -278,7 +472,7 @@
  </div>
  </div>
  <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-300">
- <p>&copy; 2025 PokéWiki. Creado con ❤️ para entrenadores Pokémon.</p>
+ <p>&copy; 2025 Pokedex Luis. Creado con ❤️ para entrenadores Pokémon.</p>
  </div>
  </div>
  </footer>
@@ -294,10 +488,25 @@
  search: '',
  types: [],
  generation: '',
+ class: '',
  sortBy: 'id'
  },
- isLoading: false
+ isLoading: false,
+ darkMode: false
  };
+
+ // Lista de Pokémon legendarios por ID
+ const legendaryPokemon = [
+ 144, 145, 146, // Articuno, Zapdos, Moltres
+ 150, 151, // Mewtwo, Mew
+ 243, 244, 245, // Raikou, Entei, Suicune
+ 249, 250, 251, // Lugia, Ho-oh, Celebi
+ 377, 378, 379, 380, 381, 382, 383, 384, 385, 386, // Hoenn legendarios
+ 480, 481, 482, 483, 484, 485, 486, 487, 488, 489, 490, 491, 492, 493, // Sinnoh legendarios
+ 494, 638, 639, 640, 641, 642, 643, 644, 645, 646, 647, 648, 649, // Unova legendarios
+ 716, 717, 718, 719, 720, 721, // Kalos legendarios
+ 785, 786, 787, 788, 789, 790, 791, 792, 800, 801, 802, 807, 808, 809 // Alola legendarios
+ ];
 
  // Configuración de tipos de Pokémon con colores
  const pokemonTypes = {
@@ -345,6 +554,54 @@
  // Función para obtener el nombre en español del tipo
  function getTypeName(type) {
  return pokemonTypes[type]?.name || capitalize(type);
+ }
+
+ // Función para verificar si un Pokémon es legendario
+ function isLegendary(pokemonId) {
+ return legendaryPokemon.includes(pokemonId);
+ }
+
+ // Función para alternar modo oscuro
+ function toggleDarkMode() {
+ appState.darkMode = !appState.darkMode;
+ 
+ if (appState.darkMode) {
+ document.documentElement.classList.add('dark');
+ localStorage.setItem('darkMode', 'true');
+ } else {
+ document.documentElement.classList.remove('dark');
+ localStorage.setItem('darkMode', 'false');
+ }
+ 
+ updateDarkModeIcon();
+ }
+
+ // Función para actualizar el icono del modo oscuro
+ function updateDarkModeIcon() {
+ const sunIcon = document.querySelector('.sun-icon');
+ const moonIcon = document.querySelector('.moon-icon');
+ 
+ if (appState.darkMode) {
+ sunIcon.classList.add('hidden');
+ moonIcon.classList.remove('hidden');
+ } else {
+ sunIcon.classList.remove('hidden');
+ moonIcon.classList.add('hidden');
+ }
+ }
+
+ // Función para inicializar el modo oscuro
+ function initializeDarkMode() {
+ const savedDarkMode = localStorage.getItem('darkMode');
+ const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+ 
+ appState.darkMode = savedDarkMode === 'true' || (savedDarkMode === null && prefersDark);
+ 
+ if (appState.darkMode) {
+ document.documentElement.classList.add('dark');
+ }
+ 
+ updateDarkModeIcon();
  }
 
  // Función para mostrar/ocultar estados de carga
@@ -399,7 +656,8 @@
  name: stat.stat.name,
  base_stat: stat.base_stat
  })),
- abilities: pokemonData.abilities.map(ability => ability.ability.name)
+ abilities: pokemonData.abilities.map(ability => ability.ability.name),
+ isLegendary: isLegendary(pokemonData.id)
  };
  } catch (error) {
  console.error(`Error loading pokemon ${pokemon.name}:`, error);
@@ -451,6 +709,28 @@
  });
  }
 
+ // Función para crear filtros de clasificación
+ function createClassFilters() {
+ const classFiltersContainer = document.getElementById('classFilters');
+ 
+ const classifications = [
+ { id: 'normal', name: '⭐ Normal', color: '#6B7280', bgColor: '#F3F4F6' },
+ { id: 'legendary', name: '👑 Legendario', color: '#FFFFFF', bgColor: '#F97316' }
+ ];
+
+ classifications.forEach(({ id, name, color, bgColor }) => {
+ const button = document.createElement('button');
+ button.className = 'px-3 py-2 rounded-full text-xs font-medium transition-all hover:scale-105';
+ button.style.backgroundColor = bgColor;
+ button.style.color = color;
+ button.textContent = name;
+ button.dataset.class = id;
+
+ button.addEventListener('click', () => toggleClassFilter(id, button));
+ classFiltersContainer.appendChild(button);
+ });
+ }
+
  // Función para alternar filtro de tipo
  function toggleTypeFilter(type, button) {
  const index = appState.activeFilters.types.indexOf(type);
@@ -461,6 +741,26 @@
  } else {
  appState.activeFilters.types.splice(index, 1);
  button.classList.remove('ring-4', 'ring-white', 'ring-opacity-50');
+ }
+
+ filterPokemon();
+ }
+
+ // Función para alternar filtro de clasificación
+ function toggleClassFilter(classType, button) {
+ // Si ya está activo, lo desactivamos
+ if (appState.activeFilters.class === classType) {
+ appState.activeFilters.class = '';
+ button.classList.remove('ring-4', 'ring-white', 'ring-opacity-50');
+ } else {
+ // Desactivar otros botones de clasificación
+ document.querySelectorAll('#classFilters button').forEach(btn => {
+ btn.classList.remove('ring-4', 'ring-white', 'ring-opacity-50');
+ });
+ 
+ // Activar el nuevo filtro
+ appState.activeFilters.class = classType;
+ button.classList.add('ring-4', 'ring-white', 'ring-opacity-50');
  }
 
  filterPokemon();
@@ -496,6 +796,15 @@
  );
  }
 
+ // Filtro por clase
+ if (appState.activeFilters.class) {
+ if (appState.activeFilters.class === 'legendary') {
+ filtered = filtered.filter(pokemon => pokemon.isLegendary);
+ } else if (appState.activeFilters.class === 'normal') {
+ filtered = filtered.filter(pokemon => !pokemon.isLegendary);
+ }
+ }
+
  // Ordenamiento
  filtered.sort((a, b) => {
  switch (appState.activeFilters.sortBy) {
@@ -521,9 +830,12 @@
 
  // Función para actualizar estadísticas
  function updateStats() {
+ const legendaryCount = appState.allPokemon.filter(p => p.isLegendary).length;
+ 
  document.getElementById('totalCount').textContent = appState.allPokemon.length;
  document.getElementById('showingCount').textContent = appState.filteredPokemon.length;
  document.getElementById('totalPokemon').textContent = appState.allPokemon.length;
+ document.getElementById('legendaryCount').textContent = legendaryCount;
  }
 
  // Función para renderizar Pokémon
@@ -540,7 +852,7 @@
  const pokemonToShow = appState.filteredPokemon.slice(startIndex, endIndex);
 
  pokemonGrid.innerHTML = pokemonToShow.map(pokemon => `
- <div class="pokemon-card rounded-xl overflow-hidden cursor-pointer fade-in" data-pokemon-id="${pokemon.id}">
+ <div class="pokemon-card ${pokemon.isLegendary ? 'legendary' : ''} rounded-xl overflow-hidden cursor-pointer fade-in" data-pokemon-id="${pokemon.id}">
  <div class="aspect-square bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-4">
  <img
  src="${pokemon.image}"
@@ -560,10 +872,15 @@
  ${getTypeName(type)}
  </span>
  `).join('')}
+ ${pokemon.isLegendary ? `
+ <span class="legendary-badge px-2 py-1 rounded-full text-xs font-medium">
+ 👑 Legendario
+ </span>
+ ` : ''}
  </div>
  <div class="grid grid-cols-2 gap-4 text-sm text-gray-600">
  <div>
- <span class="font-medium">Altura:</span> ${pokemon.height / 10}m
+:</span> ${pokemon.height / 10}m
  </div>
  <div>
  <span class="font-medium">Peso:</span> ${pokemon.weight / 10}kg
@@ -655,7 +972,7 @@
  modalContent.innerHTML = `
  <div class="relative">
  <!-- Header del Modal -->
- <div class="gradient-bg text-white p-6 relative overflow-hidden">
+ <div class="gradient-bg text-white p-6 relative overflow-hidden ${pokemon.isLegendary ? 'bg-gradient-to-br from-orange-400 to-red-600' : ''}">
  <button id="closeModal" class="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors z-10">
  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -663,7 +980,7 @@
  </button>
 
  <div class="flex items-center space-x-6">
- <div class="w-32 h-32 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+ <div class="w-32 h-32 bg-white bg-opacity-20 rounded-full flex items-center justify-center ${pokemon.isLegendary ? 'border-4 border-yellow-300' : ''}">
  <img
  src="${pokemon.image}"
  alt="${capitalize(pokemon.name)}"
@@ -671,7 +988,10 @@
  >
  </div>
  <div>
+ <div class="flex items-center space-x-3 mb-2">
  <h2 class="text-3xl font-bold font-orbitron">${capitalize(pokemon.name)}</h2>
+ ${pokemon.isLegendary ? '<span class="text-2xl">👑</span>' : ''}
+ </div>
  <p class="text-purple-100 text-lg">#${pokemon.id.toString().padStart(3, '0')}</p>
  <div class="flex flex-wrap gap-2 mt-3">
  ${pokemon.types.map(type => `
@@ -679,6 +999,11 @@
  ${getTypeName(type)}
  </span>
  `).join('')}
+ ${pokemon.isLegendary ? `
+ <span class="legendary-badge px-3 py-1 rounded-full text-sm font-medium">
+ 👑 Legendario
+ </span>
+ ` : ''}
  </div>
  </div>
  </div>
@@ -696,9 +1021,9 @@
  <div class="text-2xl font-bold text-gray-800">${pokemon.weight / 10}kg</div>
  <div class="text-sm text-gray-600">Peso</div>
  </div>
- <div class="bg-gray-50 rounded-lg p-4 text-center">
- <div class="text-2xl font-bold text-gray-800">${pokemon.abilities.length}</div>
- <div class="text-sm text-gray-600">Habilidades</div>
+ <div class="bg-gray-50 rounded-lg p-4 text-center ${pokemon.isLegendary ? 'bg-orange-50 border border-orange-200' : ''}">
+ <div class="text-2xl font-bold ${pokemon.isLegendary ? 'text-orange-600' : 'text-gray-800'}">${pokemon.isLegendary ? 'LEGENDARIO' : 'NORMAL'}</div>
+ <div class="text-sm text-gray-600">Clasificación</div>
  </div>
  </div>
 
@@ -772,16 +1097,23 @@
  search: '',
  types: [],
  generation: '',
+ class: '',
  sortBy: 'id'
  };
 
  // Limpiar inputs
  document.getElementById('searchInput').value = '';
  document.getElementById('generationFilter').value = '';
+ document.getElementById('classFilter').value = '';
  document.getElementById('sortBy').value = 'id';
 
  // Limpiar botones de tipos
  document.querySelectorAll('#typeFilters button').forEach(button => {
+ button.classList.remove('ring-4', 'ring-white', 'ring-opacity-50');
+ });
+
+ // Limpiar botones de clasificación
+ document.querySelectorAll('#classFilters button').forEach(button => {
  button.classList.remove('ring-4', 'ring-white', 'ring-opacity-50');
  });
 
@@ -819,6 +1151,12 @@
  filterPokemon();
  });
 
+ // Filtro por clase
+ document.getElementById('classFilter').addEventListener('change', (e) => {
+ appState.activeFilters.class = e.target.value;
+ filterPokemon();
+ });
+
  // Ordenamiento
  document.getElementById('sortBy').addEventListener('change', (e) => {
  appState.activeFilters.sortBy = e.target.value;
@@ -828,10 +1166,20 @@
  // Limpiar filtros
  document.getElementById('clearFilters').addEventListener('click', clearAllFilters);
 
- // Toggle modo oscuro (función básica)
- document.getElementById('darkModeToggle').addEventListener('click', () => {
- document.body.classList.toggle('dark');
- // Aquí podrías implementar un modo oscuro completo
+ // Toggle modo oscuro
+ document.getElementById('darkModeToggle').addEventListener('click', toggleDarkMode);
+
+ // Detectar cambios en preferencia del sistema
+ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+ if (localStorage.getItem('darkMode') === null) {
+ appState.darkMode = e.matches;
+ if (appState.darkMode) {
+ document.documentElement.classList.add('dark');
+ } else {
+ document.documentElement.classList.remove('dark');
+ }
+ updateDarkModeIcon();
+ }
  });
 
  // Cerrar modal con ESC
@@ -844,18 +1192,24 @@
 
  // Función de inicialización
  async function initApp() {
- console.log('🚀 Iniciando PokéWiki...');
+ console.log('🚀 Iniciando Pokedex Luis...');
+
+ // Inicializar modo oscuro antes que nada
+ initializeDarkMode();
 
  // Configurar event listeners
  setupEventListeners();
 
  // Crear filtros de tipos
  createTypeFilters();
+ 
+ // Crear filtros de clasificación
+ createClassFilters();
 
  // Cargar Pokémon
  await loadAllPokemon();
 
- console.log('✅ PokéWiki cargada correctamente!');
+ console.log('✅ Pokedex Luis cargada correctamente!');
  }
 
  // Inicializar aplicación cuando el DOM esté listo
@@ -869,6 +1223,7 @@
  types: pokemon.types,
  height: pokemon.height / 10,
  weight: pokemon.weight / 10,
+ isLegendary: pokemon.isLegendary,
  stats: pokemon.stats.reduce((acc, stat) => {
  acc[stat.name] = stat.base_stat;
  return acc;
@@ -907,6 +1262,13 @@
  });
 
  console.log('📊 Estadísticas por generación:', genStats);
+
+ const legendaryStats = {
+ 'Legendarios': appState.allPokemon.filter(p => p.isLegendary).length,
+ 'Normales': appState.allPokemon.filter(p => !p.isLegendary).length
+ };
+
+ console.log('📊 Estadísticas por clasificación:', legendaryStats);
  }
  </script>
 </body>
